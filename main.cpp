@@ -2,30 +2,12 @@
 #include <google/protobuf/util/json_util.h>
 #include "TestMapBuilder.h"
 #include <iostream>
-#include <sys/types.h>
-#include <sys/socket.h>
-#include <sys/un.h>
-#include <stdio.h>
-#include <unistd.h>
-#include <time.h>
-#include <thread>
-#include <cstring>
 
 using namespace std;
 using namespace google::protobuf::util;
 
-
-int main()
+void createEventData(unordered_map<string,string> &eventMap)
 {
-    cout << "main started" << endl;
-//    auto test = test::TestMap::default_instance();
-//    auto& testmap = *test.mutable_map1();
-//    string key = "testkey";
-//    string val = "testvalue";
-//    testmap[key] = val;
-//    cout << "test.map1_size: " << test.map1_size() << endl;
-//    cout << "testmap[key]: " << testmap[key] << endl;
-    unordered_map<string,string> eventMap;
     eventMap["EventName"]="TestEvent";
     eventMap["NumTracks"]="2";
     eventMap["Ctsl1"]="1";
@@ -38,9 +20,11 @@ int main()
     eventMap["Category2"]="Air";
     eventMap["Latitude2"]="37.50";
     eventMap["Longitude2"]="-74.0";
-    TestMapBuilder builder;
+}
 
-    //Create message from map data
+test::TestMap createMessageFromMapData(unordered_map<string,string> &eventMap)
+{
+    TestMapBuilder builder;
     auto testMessage = builder.createMessageFromMap(eventMap);
     cout << "testMessage size: " << testMessage.map1_size() << endl;
     auto messageMap = testMessage.mutable_map1();
@@ -55,12 +39,31 @@ int main()
             }
         }    
     }
+    return testMessage;
+}
 
-    //Create map from message data
+void createMapFromMessageData(test::TestMap testMessage)
+{
+    TestMapBuilder builder;
     unordered_map<string,string> testMap = builder.createMapFromMessage(testMessage);
     unordered_map<string,string>::iterator iter;
     for (iter = testMap.begin(); iter != testMap.end(); ++iter)
     {
         cout << "testMap key:" << iter->first << " value: " << iter->second << endl;
     }
+}
+
+int main()
+{
+    cout << "main started" << endl;
+
+    unordered_map<string,string> eventMap;
+
+    createEventData(eventMap);
+
+    //Create message from map data
+    auto testMessage = createMessageFromMapData(eventMap);
+
+    //Create map from message data
+    createMapFromMessageData(testMessage);
 }

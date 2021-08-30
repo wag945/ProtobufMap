@@ -12,7 +12,7 @@ test::TestMap TestMapBuilder::createMessageFromMap(unordered_map<string,string> 
     unordered_map<string,string>::iterator iter;
     for (iter = theMap.begin(); iter != theMap.end(); ++iter)
     {
-        cout << "createMessageFromMap key:" << iter->first << " value: " << iter->second << endl;
+        //cout << "createMessageFromMap key:" << iter->first << " value: " << iter->second << endl;
         testmap[iter->first]=iter->second;
     }
 
@@ -25,7 +25,7 @@ unordered_map<string,string> TestMapBuilder::createMapFromMessage(test::TestMap 
     auto messageMap = message.mutable_map1();
     for (auto & pair : *messageMap)
     {
-        cout << "Key:" << pair.first << " Value: " << pair.second << endl;
+        //cout << "Key:" << pair.first << " Value: " << pair.second << endl;
         eventMap[pair.first] = pair.second;
     }
 
