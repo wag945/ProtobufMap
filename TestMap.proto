@@ -1,0 +1,8 @@
+syntax = "proto3";
+
+package test;
+
+message TestMap 
+{
+     map<string,string> map1 = 1;
+}
