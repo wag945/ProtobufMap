@@ -6,8 +6,9 @@ pipeline {
             steps {
                 echo 'Building..'
                 sh 'printenv'
-                cmakeBuild
+                cmakeBuild(
                 installation: 'InSearchPath'
+                )
             }
         }
         stage('Test') {
