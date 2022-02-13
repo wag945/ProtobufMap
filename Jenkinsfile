@@ -6,7 +6,7 @@ pipeline {
             steps {
                 echo 'Building..'
                 sh 'printenv'
-                sh 'cmake .'
+                sh 'which cmake'
             }
         }
         stage('Test') {
