@@ -1,14 +1,22 @@
 pipeline {
     agent any
+
     stages {
-        stage('build') {
+        stage('Build') {
             steps {
-              echo "build step"
-              sh 'printenv'
-              sh 'cmake .'
+                echo 'Building..'
+                sh 'printenv'
+                sh 'cmake .'
             }
+        }
+        stage('Test') {
             steps {
-              echo "test step"
+                echo 'Testing..'
+            }
+        }
+        stage('Deploy') {
+            steps {
+                echo 'Deploying....'
             }
         }
     }
